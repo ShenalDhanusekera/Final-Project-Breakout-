@@ -10,7 +10,8 @@ public class Ball extends Actor
 {
     private int speed;
     private int lives;
-    
+    private int points;
+
     /**
      * Constructor for objects of class PlayField.
      * 
@@ -19,7 +20,6 @@ public class Ball extends Actor
     {
         speed = 4;
         setRotation(Greenfoot.getRandomNumber(180));
-        lives = 5;
     }
 
     /**
@@ -28,6 +28,7 @@ public class Ball extends Actor
      */
     public void act() 
     {
+        lives = getWorld().getObjects(Heart.class).size();
         move(speed);
         if(getX() >= getWorld().getWidth()-10)
         {
@@ -59,13 +60,41 @@ public class Ball extends Actor
         }
         if(getY() >= 690)
         {
-            lives--;
+            PlayField world = (PlayField) getWorld();
+            getWorld().removeObject(getWorld().getObjects(Heart.class).get(getWorld().getObjects(Heart.class).size() - 1));
             getWorld().removeObject(this);
+            world.addBall();
         }
+        /**Speed Increaser and Decreaser
+         * 
+         *  if(Greenfoot.isKeyDown("e"))
+         *  {   
+         *     if(speed > 0)
+         *     {
+         *         speed++;
+         *      }
+         *      else
+         *      {
+         *          speed--;
+         *      }
+         *  }
+         *  if(Greenfoot.isKeyDown("d"))
+         *  {
+         *      if(speed < 0)
+         *      {
+         *          speed++;
+         *      }
+         *      else
+         *      {
+         *          speed--;
+         *      }
+         *  }
+        */
     }
 
     private void rotate()
     {
         setRotation(getRotation() * -1);
+        setRotation(getRotation() + Greenfoot.getRandomNumber(10) - 4);
     }
 }
