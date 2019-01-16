@@ -95,6 +95,6 @@ public class Ball extends Actor
     private void rotate()
     {
         setRotation(getRotation() * -1);
-        setRotation(getRotation() + Greenfoot.getRandomNumber(10) - 4);
+        //setRotation(getRotation() + Greenfoot.getRandomNumber(10) - 4);
     }
 }
