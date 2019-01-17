@@ -57,6 +57,7 @@ public class Ball extends Actor
             getWorld().removeObjects(getIntersectingObjects(Square.class));
             rotate();
             ( (PlayField)getWorld()).update();
+            ( (PlayField)getWorld()).updateTwo();
         }
         if(getY() >= 690)
         {

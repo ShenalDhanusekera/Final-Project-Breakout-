@@ -9,7 +9,10 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class PlayField extends World
 {
     private Scoreboard score;
-    
+    private Money money;
+    //Integer that hold more digits (Longer Integer)
+    private long startTime = System.currentTimeMillis();
+
     /**
      * Constructor for objects of class PlayField.
      * 
@@ -18,36 +21,42 @@ public class PlayField extends World
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(1000, 700, 1);
-        
+
         prepare();
-        
+
         score = new Scoreboard();
-        addObject( score, 150, 580);
+        addObject( score, 100, 580);
         
-        addBall();
+        money = new Money();
+        addObject( money, 200, 500);
+
+        startTime = System.currentTimeMillis();
+
     }
-    
+   
     /**
      * Act - do whatever the PlayField wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     public void act() 
     {
-        
+        startDelay();
     }  
-    
+
     /**
      * prepare method adds all the Square, 
      */
     private void prepare()
     {
         addObject( new Paddles(), getWidth()/2 +140, 650);
-        
+
         addObject(new Heart(), 34, 666);
         addObject(new Heart(), 84, 666);
         addObject(new Heart(), 134, 666);
         addObject(new Heart(), 184, 666);
         addObject(new Heart(), 234, 666);
+        addObject(new MoneyIcon(), 65, 500);
+        addObject(new ScoreIcon(), 65, 500);
         
         for(int y = 0; y < 7; y++)
         {   
@@ -57,7 +66,7 @@ public class PlayField extends World
             }
         }
     }
-    
+
     public void addBall()
     {
         if(getObjects(Heart.class).isEmpty() == false)
@@ -67,13 +76,33 @@ public class PlayField extends World
         }
         else
         {
-            Greenfoot.stop();
-            showText("You Lost :(", getWidth()/2 + 140, getHeight()/2);
+            //Greenfoot.stop();
+            //showText("You Lost :(", getWidth()/2 + 140, getHeight()/2);
+            Greenfoot.setWorld(new GameOverScreen());
         }
     }
     
+    private void startDelay()
+    {
+        //This makes it so it wont run all the time
+        if(System.currentTimeMillis() - startTime < 1000)
+        {
+            //Makes the ball delayed so it wont spawn right when the game is started
+            while((System.currentTimeMillis() - startTime) < 1000)
+            {  
+            }
+            
+            addBall();
+        }
+    }
+
     public void update()
     {
         score.addToScore();
+    }
+    
+    public void updateTwo()
+    {
+        money.addToMoney();    
     }
 }
