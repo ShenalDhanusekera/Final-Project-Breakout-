@@ -14,6 +14,9 @@ public class HomeButton extends Actor
      */
     public void act() 
     {
-        // Add your action code here.
+        if(Greenfoot.mousePressed(this) == true)
+        {
+            Greenfoot.setWorld(new StartScreen());
+        }
     }    
 }

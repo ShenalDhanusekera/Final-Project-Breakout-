@@ -11,6 +11,7 @@ public class Ball extends Actor
     private int speed;
     private int lives;
     private int points;
+    private boolean pause = false;
 
     /**
      * Constructor for objects of class PlayField.
@@ -28,43 +29,48 @@ public class Ball extends Actor
      */
     public void act() 
     {
-        lives = getWorld().getObjects(Heart.class).size();
-        move(speed);
-        if(getX() >= getWorld().getWidth()-10)
+        PlayField world = (PlayField) getWorld();
+        pause = world.pause;
+        if(pause == false)
         {
-            rotate();
-            speed = -speed;
+
+            lives = getWorld().getObjects(Heart.class).size();
             move(speed);
-        }
-        if(isTouching(Paddles.class))
-        {
-            rotate();
-            setLocation(getX(), getY() - 5);
-        }
-        if(getX() <= 290)
-        {
-            speed = -speed;
-            rotate();
-            setRotation(getRotation() + Greenfoot.getRandomNumber(10));
-        }
-        if(getY() <= 10)
-        {
-            speed = speed;
-            rotate();
-        }
-        if(isTouching(Square.class))
-        {
-            getWorld().removeObjects(getIntersectingObjects(Square.class));
-            rotate();
-            ( (PlayField)getWorld()).update();
-            ( (PlayField)getWorld()).updateTwo();
-        }
-        if(getY() >= 690)
-        {
-            PlayField world = (PlayField) getWorld();
-            getWorld().removeObject(getWorld().getObjects(Heart.class).get(getWorld().getObjects(Heart.class).size() - 1));
-            getWorld().removeObject(this);
-            world.addBall();
+            if(getX() >= getWorld().getWidth()-10)
+            {
+                rotate();
+                speed = -speed;
+                move(speed);
+            }
+            if(isTouching(Paddles.class))
+            {
+                rotate();
+                setLocation(getX(), getY() - 5);
+            }
+            if(getX() <= 290)
+            {
+                speed = -speed;
+                rotate();
+                setRotation(getRotation() + Greenfoot.getRandomNumber(10));
+            }
+            if(getY() <= 10)
+            {
+                speed = speed;
+                rotate();
+            }
+            if(isTouching(Square.class))
+            {
+                getWorld().removeObjects(getIntersectingObjects(Square.class));
+                rotate();
+                ( (PlayField)getWorld()).update();
+                ( (PlayField)getWorld()).updateTwo();
+            }
+            if(getY() >= 690)
+            {
+                getWorld().removeObject(getWorld().getObjects(Heart.class).get(getWorld().getObjects(Heart.class).size() - 1));
+                getWorld().removeObject(this);
+                world.addBall();
+            }
         }
         /**Speed Increaser and Decreaser
          * 
@@ -90,12 +96,12 @@ public class Ball extends Actor
          *          speed--;
          *      }
          *  }
-        */
+         */
     }
 
     private void rotate()
     {
         setRotation(getRotation() * -1);
-        setRotation(getRotation() + Greenfoot.getRandomNumber(10) - 4);
+        setRotation(getRotation() + Greenfoot.getRandomNumber(30) - 15);
     }
 }

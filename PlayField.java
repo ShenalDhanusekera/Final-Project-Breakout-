@@ -12,6 +12,7 @@ public class PlayField extends World
     private Money money;
     //Integer that hold more digits (Longer Integer)
     private long startTime = System.currentTimeMillis();
+    public boolean pause = false;
 
     /**
      * Constructor for objects of class PlayField.
@@ -41,6 +42,11 @@ public class PlayField extends World
     public void act() 
     {
         startDelay();
+        
+        if(getObjects(Square.class).isEmpty() == true)
+        {
+            Greenfoot.setWorld(new WinScreen());
+        }
     }  
 
     /**
@@ -57,8 +63,10 @@ public class PlayField extends World
         addObject(new Heart(), 234, 666);
         addObject(new MoneyIcon(), 60, 515);
         addObject(new ScoreIcon(), 200, 582);
-        addObject(new ResetButton(), 70, 30);
-        addObject(new ResetButton(), 200, 30);
+        addObject(new PlayButton(), 70, 30);
+        addObject(new PauseButton(), 198, 30);
+        addObject(new HomeButton(), 70, 75);
+        addObject(new ResetButton(), 198, 75);
         
         for(int y = 0; y < 7; y++)
         {   

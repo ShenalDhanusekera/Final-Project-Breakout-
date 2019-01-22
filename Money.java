@@ -26,7 +26,7 @@ public class Money extends Actor
         GreenfootImage img = new GreenfootImage(150,30);
         img.setFont( myFont );
         img.setColor(Color.WHITE);
-        img.drawString("Money: " + money, 5,25);
+        img.drawString("Money: " + money + "$", 5,25);
         setImage(img);
     }
     
